@@ -1,5 +1,6 @@
 
 ESX = nil
+local reportId = 0
 
 Citizen.CreateThread(function()
     while ESX == nil do
@@ -14,13 +15,18 @@ AddEventHandler('esx:playerLoaded',function( playerId, xPlayer)
     end
 end)
 
-RegisterNetEvent('performWebhook',function(name,data,source)
+RegisterNetEvent('performWebhookAndCreateReport',function(name,data,source)
     sendToDiscord(name,data,source)
+    assignIdToReport(name,data,source)
 end)
 
-function saveReport(name,message,source)
-    --TODO
+function assignIdToReport(name,data,source)
+    TriggerClientEvent('createAndShowReport',source,name,data,source,assignReportId())
+end
 
+function assignReportId ()
+   return reportId + 1
+   reportId + 1
 end
 
 
@@ -48,7 +54,7 @@ function sendToDiscord(name,message,source)
       end
     end
          local embed =
-        { 
+        {
             {
             ["title"] = 'Hráč : '..source,
             ["description"] = message,
@@ -57,9 +63,9 @@ function sendToDiscord(name,message,source)
                 {
                 ["name"] = 'Identifiers',
                 ["value"] = --steamid .. ' \n' ..
-                            license .. ' \n' .. 
-                            discord .. ' \n' .. 
-                            xbl .. ' \n' .. 
+                            license .. ' \n' ..
+                            discord .. ' \n' ..
+                            xbl .. ' \n' ..
                             liveid.. ' \n' ..
                             ip,
                 ["inline"] = "false",
@@ -67,7 +73,7 @@ function sendToDiscord(name,message,source)
                 {
                 ["name"] = 'Pozice',
                 ["value"] = 'X : ' ..
-                            'Y : ' .. 
+                            'Y : ' ..
                             'Z : ' ,
                 ["inline"] = 'false',
                 },
@@ -75,7 +81,7 @@ function sendToDiscord(name,message,source)
                     ["name"] = 'Jméno hráče',
                     ["value"] = playerName,
                     ["inline"] = 'false',
-                }, 
+                },
             },
                 ["footer"] = {
                 ["text"] = 'typ: '.. name,
@@ -87,7 +93,7 @@ function sendToDiscord(name,message,source)
      'POST',
      json.encode({username = 'ReportSystem',embeds = embed}),
      {['Content-Type'] = 'application/json'})
-end 
+end
 
 RegisterCommand("checkAdmin",function(source, args, rawCommand)
     local xPlayer = ESX.GetPlayerFromId(source)

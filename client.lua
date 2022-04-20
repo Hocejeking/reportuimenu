@@ -10,11 +10,14 @@ end, false)]]
 RegisterNUICallback("report",function(data)
     chat(data.text .." "..data.type,{0,255,0})
     if data.type == "report" then
-        TriggerServerEvent('performWebhook',data.type,data.text,src)
+        TriggerServerEvent('performWebhookAndCreateReport',data.type,data.text,src)
+        
     elseif data.type == "q" then
-        TriggerServerEvent('performWebhook','otázka',data.text,src)
+        TriggerServerEvent('performWebhookAndCreateReport','otázka',data.text,src)
+        
     elseif data.type =="bug" then
-        TriggerServerEvent('performWebhook',data.type,data.text,src)
+        TriggerServerEvent('performWebhookAndCreateReport',data.type,data.text,src)
+        
     end 
     SetDisplay(false)
 end)
@@ -66,6 +69,17 @@ function SetDisplay(bool)
     
 end
 
+function addReportToNUI(name,text,source,reportId)
+    SetNuiFocus(false, false)
+    SendNuiMessage({
+        type = "newReport",
+        text = text,
+        name = name,
+        source = source,
+        reportId = reportId,
+    })
+end
+
 function chat(str,color)
     TriggerEvent("chat:addMessage",{
     color = color,
@@ -76,4 +90,8 @@ end
 
 RegisterNetEvent('adminCheck',function(bool)
     isAdmin = bool 
+end)
+
+RegisterNetEvent('createAndShowReport',function (name,text,source,reportId)
+    addReportToNUI(name,text,source,reportId)
 end)

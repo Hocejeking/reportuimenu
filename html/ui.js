@@ -35,6 +35,14 @@ $(function (){
                 display(false)
             }
         }
+        if(item.type == "newReport")
+        {
+            $("#reports").append(<svg width ="350" height ="200" >
+                <rect width = "350" height ="200" style="fill.rgb(0,250,0">
+                        $("<p></p>").text(item.text);
+                </rect>
+            </svg>)
+        }
     })
     document.onkeyup = function(data){
         if(data.key == 27){
