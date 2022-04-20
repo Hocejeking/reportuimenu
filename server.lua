@@ -25,8 +25,8 @@ function assignIdToReport(name,data,source)
 end
 
 function assignReportId ()
-   return reportId + 1
-   reportId + 1
+   reportId = reportId + 1
+   return reportId
 end
 
 

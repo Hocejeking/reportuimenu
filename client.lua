@@ -70,9 +70,11 @@ function SetDisplay(bool)
 end
 
 function addReportToNUI(name,text,source,reportId)
+    print(name..text..source..reportId)
     SetNuiFocus(false, false)
-    SendNuiMessage({
+    SendNUIMessage({
         type = "newReport",
+        status = false,
         text = text,
         name = name,
         source = source,

@@ -42,6 +42,23 @@ button {
     transition: all 0.2s;
 }
 
+#reports{
+    border: black;
+    border-style: dashed;
+    fill: grey;
+}
+
+.closeadmin{
+    background-color: aliceblue;
+    padding: 12px;
+    border: 1em;
+    text-align: center;
+    box-sizing: border-box;
+    display: inline-block;
+    transition: all 0.2s;
+    position: absolute;
+}
+
 #admin{
     display: none;
 }

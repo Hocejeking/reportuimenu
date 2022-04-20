@@ -37,11 +37,11 @@ $(function (){
         }
         if(item.type == "newReport")
         {
-            $("#reports").append(<svg width ="350" height ="200" >
-                <rect width = "350" height ="200" style="fill.rgb(0,250,0">
-                        $("<p></p>").text(item.text);
-                </rect>
-            </svg>)
+            var el = this.document.createElement("p")
+            el.innerHTML = item.text
+            
+            $("#reports").append(el)
+           
         }
     })
     document.onkeyup = function(data){
